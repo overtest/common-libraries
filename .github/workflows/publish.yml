@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: build_and_deploy
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - 'main'
+    pull_request:
+        branches:
+            - 'main'
+
+env:
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+    DOTNET_NOLOGO: true
+    NUGET_DIRECTORY: ${{ github.workspace}}/nuget
+    NUGET_SOURCE: codeberg
+    NUGET_SOURCE_URL: https://codeberg.org/api/packages/overtest/nuget/index.json
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Setup .NET 8.0.x SDK
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: '8.0.x'
+
+        - name: Restore dependencies
+          run: dotnet restore --no-cache --force --verbosity normal
+        - name: Build solution
+          run: dotnet build --configuration Release --no-restore --verbosity normal
+        - name: Pack nuget packages
+          run: dotnet pack --configuration Release --no-restore --no-build --verbosity normal --output ${{ env.NUGET_DIRECTORY }}
+
+        - name: Upload build artifacts
+          uses: actions/upload-artifact@v3
+          with:
+            name: nuget_artifacts
+            if-no-files-found: error
+            retention-days: 7
+            path: ${{ env.NUGET_DIRECTORY }}/*.nupkg
+
+        - name: Add NuGet source for Codeberg
+          if: github.event_name != 'pull_request'
+          run: dotnet nuget add source --name ${{ env.NUGET_SOURCE }} --username ${{ secrets.CODEBERG_PACKAGES_REGISTRY_USERNAME}} --password  ${{ secrets.CODEBERG_PACKAGES_REGISTRY_TOKEN}} ${{ env.NUGET_SOURCE_URL }}
+        - name: Push nuget packages to Codeberg
+          if: github.event_name != 'pull_request'
+          run: dotnet nuget push --source ${{ env.NUGET_SOURCE }} ${{ env.NUGET_DIRECTORY }}/*.nupkg

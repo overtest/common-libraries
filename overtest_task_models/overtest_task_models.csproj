@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <RootNamespace>Sirkadirov.Overtest.Common.TaskModels</RootNamespace>
+        <LangVersion>latest</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Overtest Task Models</Title>
+        <Authors>Yurii Kadirov (aka Sirkadirov)</Authors>
+        <PackageProjectUrl>https://github.com/overtest/common-libraries</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/overtest/common-libraries/blob/main/LICENSE.MD</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/overtest/common-libraries</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <Copyright>Copyright (C) 2023 Yurii Kadirov (aka Sirkadirov)</Copyright>
+        <Product>Overtest Task Models</Product>
+        <AssemblyVersion>0.1.0</AssemblyVersion>
+        <FileVersion>0.1.0</FileVersion>
+    </PropertyGroup>
+
+</Project>
