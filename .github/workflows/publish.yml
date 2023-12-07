@@ -46,7 +46,7 @@ jobs:
 
         - name: Add NuGet source for Codeberg
           if: github.event_name != 'pull_request'
-          run: dotnet nuget add source --name ${{ env.NUGET_SOURCE }} --username ${{ secrets.CODEBERG_PACKAGES_REGISTRY_USERNAME}} --password  ${{ secrets.CODEBERG_PACKAGES_REGISTRY_TOKEN}} ${{ env.NUGET_SOURCE_URL }}
+          run: dotnet nuget add source --name ${{ env.NUGET_SOURCE }} --username ${{ secrets.CODEBERG_PACKAGES_REGISTRY_USERNAME}} --password  ${{ secrets.CODEBERG_PACKAGES_REGISTRY_TOKEN}} --store-password-in-clear-text ${{ env.NUGET_SOURCE_URL }}
         - name: Push nuget packages to Codeberg
           if: github.event_name != 'pull_request'
           run: dotnet nuget push --source ${{ env.NUGET_SOURCE }} ${{ env.NUGET_DIRECTORY }}/*.nupkg
