@@ -23,4 +23,10 @@ public class DefaultOvertestTaskStructure
     public const string ProjectFileName = "overtest-task.json";
     public const string ProcessingConfigFileName = "task-processing.json";
     public const string TaskDescriptionFileName = "task-description.md";
+
+    public const string AuthorSolutionDirectoryName = "author-solution";
+    public const string InitializerFileName = "initializer.py";
+    public const string FinalizerFileName = "finalizer.py";
+    public const string GeneratorFileName = "generator.py";
+    public const string CheckerFileName = "checker.py";
 }

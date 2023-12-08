@@ -28,6 +28,4 @@ public class ProgrammingTaskModel
     /* > */public string Author { get; set; }
     [JsonPropertyName("difficulty")]
     /* > */public int Difficulty { get; set; }
-    [JsonPropertyName("required_compiler")]
-    /* > */public Guid RequiredCompilerId { get; set; }
 }
